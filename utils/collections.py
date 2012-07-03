@@ -16,10 +16,7 @@ def find_index(match_function, iterable):
 
 def find(match_function, iterable, default=None):
     """Returns the first item in an iterable that matches the match_function, otherwise default."""
-    index = find_index(match_function, iterable)
-    if index == -1:
-        return default
-    return iterable[index]
+    return next((item for item in iterable if match_function(item)), default)
 
 def categorize(func, iterable):
     """Returns a 2-item tuple:
