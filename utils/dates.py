@@ -1,15 +1,18 @@
-import datetime
+from datetime import date, timedelta
 
-def years_from_date_to_date(from_date, to_date):
-    from_month, from_day, from_year = from_date
-    to_month, to_day, to_year = to_date
-    year_diff = to_year - from_year
-    if from_month > to_month or ((from_month == to_month) and (from_day == to_day)):
-        return year_diff - float((from_month - to_month))/12
-    return year_diff + float((to_month - from_month))/12
+AVG_DAYS_PER_YEAR = 365.2425
 
-def years_since_date(month, day, year):
-    today = datetime.date.today()
-    return years_from_date_to_date(
-        (month, day, year,),
-        (today.month, today.day, today.year,))
+def timedelta_to_years(delta):
+    """Convert a given timedelta to years (somewhat estimated)."""
+    return delta.days / AVG_DAYS_PER_YEAR
+
+def years_since_date(from_date):
+    """Given a Date object, returns a float number of years
+    since that date."""
+    delta = date.today() - from_date
+    return timedelta_to_years(delta)
+
+def yeardelta(years):
+    """Return a date exactly *years* years ago."""
+    days = AVG_DAYS_PER_YEAR * years
+    return timedelta(days=days)
